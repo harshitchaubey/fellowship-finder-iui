@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fellowship Finder - IU Indianapolis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #990000; /* IU Red */
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .search-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .search-filters select, .search-filters input {
+            padding: 10px;
+            font-size: 16px;
+            flex: 1 1 200px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .search-filters button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #990000; /* IU Red */
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .search-filters button:hover {
+            background-color: #7a0000; /* Darker IU Red */
+        }
+        .results {
+            margin-top: 20px;
+        }
+        .result-item {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        .result-item h3 {
+            margin: 0;
+            font-size: 20px;
+            color: #990000; /* IU Red */
+        }
+        .result-item p {
+            margin: 5px 0;
+            color: #555;
+        }
+        .result-item a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .result-item a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Fellowship Finder - IU Indianapolis</h1>
+        <p>Find external fellowships and awards for IU Indianapolis graduate students.</p>
+    </header>
+
+    <div class="container">
+        <div class="search-filters">
+            <select id="field">
+                <option value="">Select Field</option>
+                <option value="STEM">STEM</option>
+                <option value="Humanities">Humanities</option>
+                <option value="Social Sciences">Social Sciences</option>
+                <option value="Business">Business</option>
+                <option value="Health Sciences">Health Sciences</option>
+                <option value="Music, Arts, Media">Music, Arts, Media</option>
+            </select>
+            <select id="eligibility">
+                <option value="">Select Eligibility</option>
+                <option value="Domestic">Domestic Students</option>
+                <option value="International">International Students</option>
+                <option value="All">All Students</option>
+                <option value="Dissertation writing">Dissertation writing</option>
+                <option value="Late-stage (all courses completed)">Late-stage (all courses completed)</option>
+                <option value="Postdoc">Postdoc</option>
+            </select>
+            <input type="text" id="keyword" placeholder="Enter keyword...">
+            <button onclick="searchFellowships()">Search</button>
+        </div>
+
+        <div class="results" id="results">
+            <!-- Fellowships from the Excel file -->
+            <div class="result-item" data-field="Humanities, Social Sciences" data-eligibility="Dissertation writing">
+                <h3><a href="#" target="_blank">Charlotte W. Newcombe Doctoral Dissertation Fellowships</a></h3>
+                <p><strong>Field:</strong> Humanities, Social Sciences</p>
+                <p><strong>Eligibility:</strong> Dissertation writing</p>
+                <p><strong>Deadline:</strong> November</p>
+                <p><strong>Award Amount:</strong> $31,000</p>
+                <p><strong>Awarding Entity:</strong> Charlotte W. Newcombe Foundation</p>
+            </div>
+            <div class="result-item" data-field="STEM, Medicine, Health" data-eligibility="Late-stage (all courses completed)">
+                <h3><a href="#" target="_blank">Christine Mirzayan Science and Technology Policy Graduate Fellowship Program</a></h3>
+                <p><strong>Field:</strong> STEM, Medicine, Health</p>
+                <p><strong>Eligibility:</strong> Late-stage (all courses completed)</p>
+                <p><strong>Deadline:</strong> September</p>
+                <p><strong>Award Length:</strong> 12 weeks</p>
+                <p><strong>Awarding Entity:</strong> National Academies Sciences Engineering Medicine</p>
+            </div>
+            <div class="result-item" data-field="Music, Arts, Media" data-eligibility="All">
+                <h3><a href="#" target="_blank">Council on Library and Information Resources - Recordings at Risk</a></h3>
+                <p><strong>Field:</strong> Music, Arts, Media</p>
+                <p><strong>Eligibility:</strong> All</p>
+                <p><strong>Deadline:</strong> April</p>
+                <p><strong>Award Amount:</strong> $10,000 to $50,000</p>
+                <p><strong>Awarding Entity:</strong> Council on Library and Information Resources</p>
+            </div>
+            <div class="result-item" data-field="Music, Arts, Media" data-eligibility="Postdoc">
+                <h3><a href="#" target="_blank">Council on Library and Information Resources - Postdoc Fellowship Program</a></h3>
+                <p><strong>Field:</strong> Music, Arts, Media</p>
+                <p><strong>Eligibility:</strong> Postdoc</p>
+                <p><strong>Award Amount:</strong> $70,000 (suggested)</p>
+                <p><strong>Award Length:</strong> 3 years</p>
+                <p><strong>Awarding Entity:</strong> Council on Library and Information Resources</p>
+            </div>
+            <div class="result-item" data-field="" data-eligibility="">
+                <h3><a href="#" target="_blank">Critical Language Scholarship Program</a></h3>
+                <p><strong>Field:</strong> Not specified</p>
+                <p><strong>Eligibility:</strong> Not specified</p>
+                <p><strong>Awarding Entity:</strong> Not specified</p>
+            </div>
+            <div class="result-item" data-field="" data-eligibility="">
+                <h3><a href="#" target="_blank">DAAD - German Academic Exchange Service</a></h3>
+                <p><strong>Field:</strong> Not specified</p>
+                <p><strong>Eligibility:</strong> Not specified</p>
+                <p><strong>Awarding Entity:</strong> Not specified</p>
+            </div>
+            <div class="result-item" data-field="" data-eligibility="">
+                <h3><a href="#" target="_blank">DAAD Rise - Research internships in Science and Engineering</a></h3>
+                <p><strong>Field:</strong> Not specified</p>
+                <p><strong>Eligibility:</strong> Not specified</p>
+                <p><strong>Awarding Entity:</strong> Not specified</p>
+            </div>
+            <!-- Add more fellowships here as needed -->
+        </div>
+    </div>
+
+    <script>
+        function searchFellowships() {
+            const field = document.getElementById('field').value;
+            const eligibility = document.getElementById('eligibility').value;
+            const keyword = document.getElementById('keyword').value.toLowerCase();
+
+            const results = document.querySelectorAll('.result-item');
+            results.forEach(result => {
+                const resultField = result.getAttribute('data-field');
+                const resultEligibility = result.getAttribute('data-eligibility');
+                const text = result.textContent.toLowerCase();
+
+                const matchField = field ? resultField.includes(field) : true;
+                const matchEligibility = eligibility ? resultEligibility.includes(eligibility) : true;
+                const matchKeyword = keyword ? text.includes(keyword) : true;
+
+                if (matchField && matchEligibility && matchKeyword) {
+                    result.style.display = '';
+                } else {
+                    result.style.display = 'none';
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
