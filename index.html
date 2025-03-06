@@ -11,47 +11,58 @@
             padding: 0;
             background-color: #f4f4f4;
             color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         header {
             background-color: #990000; /* IU Red */
             color: #fff;
             padding: 20px 0;
             text-align: center;
+            width: 100%;
         }
         .container {
+            display: flex;
             max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
+            width: 100%;
+            margin: 20px;
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .search-filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
+        .filters {
+            width: 250px;
+            padding: 20px;
+            border-right: 1px solid #ddd;
         }
-        .search-filters select, .search-filters input {
+        .filters h3 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #990000; /* IU Red */
+        }
+        .filters label {
+            display: block;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        .filters input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .search-bar {
+            text-align: center;
+            margin: 20px 0;
+            width: 100%;
+        }
+        .search-bar input {
             padding: 10px;
             font-size: 16px;
-            flex: 1 1 200px;
+            width: 300px;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
-        .search-filters button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #990000; /* IU Red */
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .search-filters button:hover {
-            background-color: #7a0000; /* Darker IU Red */
-        }
         .results {
-            margin-top: 20px;
+            flex: 1;
+            padding: 20px;
         }
         .result-item {
             padding: 15px;
@@ -81,37 +92,49 @@
 <body>
 
     <header>
-        <h1>Fellowship Finder - IU Indianapolis</h1>
+        <h1>Fellowship Finder </h1>
+        <h2>Graduate School IU Indianapolis </h2>
         <p>Find external fellowships and awards for IU Indianapolis graduate students.</p>
     </header>
 
+    <div class="search-bar">
+        <input type="text" id="keyword" placeholder="Enter keyword..." oninput="filterFellowships()">
+    </div>
+
     <div class="container">
-        <div class="search-filters">
-            <select id="field">
-                <option value="">Select Field</option>
-                <option value="STEM">STEM</option>
-                <option value="Humanities">Humanities</option>
-                <option value="Social Sciences">Social Sciences</option>
-                <option value="Business">Business</option>
-                <option value="Health Sciences">Health Sciences</option>
-                <option value="Music, Arts, Media">Music, Arts, Media</option>
-            </select>
-            <select id="eligibility">
-                <option value="">Select Eligibility</option>
-                <option value="Domestic">Domestic Students</option>
-                <option value="International">International Students</option>
-                <option value="All">All Students</option>
-                <option value="Dissertation writing">Dissertation writing</option>
-                <option value="Late-stage (all courses completed)">Late-stage (all courses completed)</option>
-                <option value="Postdoc">Postdoc</option>
-            </select>
-            <input type="text" id="keyword" placeholder="Enter keyword...">
-            <button onclick="searchFellowships()">Search</button>
+        <div class="filters">
+            <h3>Filter by Field</h3>
+            <label><input type="checkbox" value="STEM" onchange="filterFellowships()"> STEM</label>
+            <label><input type="checkbox" value="Humanities" onchange="filterFellowships()"> Humanities</label>
+            <label><input type="checkbox" value="Social Sciences" onchange="filterFellowships()"> Social Sciences</label>
+            <label><input type="checkbox" value="Business" onchange="filterFellowships()"> Business</label>
+            <label><input type="checkbox" value="Health Sciences" onchange="filterFellowships()"> Health Sciences</label>
+            <label><input type="checkbox" value="Music, Arts, Media" onchange="filterFellowships()"> Music, Arts, Media</label>
+
+            <h3>Filter by Eligibility</h3>
+            <label><input type="checkbox" value="Domestic" onchange="filterFellowships()"> Domestic Students</label>
+            <label><input type="checkbox" value="International" onchange="filterFellowships()"> International Students</label>
+            <label><input type="checkbox" value="All" onchange="filterFellowships()"> All Students</label>
+            <label><input type="checkbox" value="Dissertation writing" onchange="filterFellowships()"> Dissertation writing</label>
+            <label><input type="checkbox" value="Late-stage (all courses completed)" onchange="filterFellowships()"> Late-stage (all courses completed)</label>
+            <label><input type="checkbox" value="Postdoc" onchange="filterFellowships()"> Postdoc</label>
+
+            <h3>Filter by Award Type</h3>
+            <label><input type="checkbox" value="Fellowship" onchange="filterFellowships()"> Fellowship</label>
+            <label><input type="checkbox" value="Scholarship" onchange="filterFellowships()"> Scholarship</label>
+            <label><input type="checkbox" value="Grant" onchange="filterFellowships()"> Grant</label>
+            <label><input type="checkbox" value="Internship" onchange="filterFellowships()"> Internship</label>
+
+            <h3>Filter by Deadline</h3>
+            <label><input type="checkbox" value="November" onchange="filterFellowships()"> November</label>
+            <label><input type="checkbox" value="December" onchange="filterFellowships()"> December</label>
+            <label><input type="checkbox" value="January" onchange="filterFellowships()"> January</label>
+            <label><input type="checkbox" value="February" onchange="filterFellowships()"> February</label>
         </div>
 
         <div class="results" id="results">
             <!-- Fellowships with real links -->
-            <div class="result-item" data-field="Humanities, Social Sciences" data-eligibility="Dissertation writing">
+            <div class="result-item" data-field="Humanities, Social Sciences" data-eligibility="Dissertation writing" data-award-type="Fellowship" data-deadline="November">
                 <h3><a href="https://citizensandscholars.org/fellowships/for-scholars-education-leaders/charlotte-w-newcombe-fellowship/" target="_blank">Charlotte W. Newcombe Doctoral Dissertation Fellowships</a></h3>
                 <p><strong>Field:</strong> Humanities, Social Sciences</p>
                 <p><strong>Eligibility:</strong> Dissertation writing</p>
@@ -119,7 +142,7 @@
                 <p><strong>Award Amount:</strong> $31,000</p>
                 <p><strong>Awarding Entity:</strong> Charlotte W. Newcombe Foundation</p>
             </div>
-            <div class="result-item" data-field="STEM, Medicine, Health" data-eligibility="Late-stage (all courses completed)">
+            <div class="result-item" data-field="STEM, Medicine, Health" data-eligibility="Late-stage (all courses completed)" data-award-type="Fellowship" data-deadline="September">
                 <h3><a href="https://www.nationalacademies.org/our-work/the-christine-mirzayan-science--technology-policy-graduate-fellowship-program" target="_blank">Christine Mirzayan Science and Technology Policy Graduate Fellowship Program</a></h3>
                 <p><strong>Field:</strong> STEM, Medicine, Health</p>
                 <p><strong>Eligibility:</strong> Late-stage (all courses completed)</p>
@@ -127,7 +150,7 @@
                 <p><strong>Award Length:</strong> 12 weeks</p>
                 <p><strong>Awarding Entity:</strong> National Academies Sciences Engineering Medicine</p>
             </div>
-            <div class="result-item" data-field="Music, Arts, Media" data-eligibility="All">
+            <div class="result-item" data-field="Music, Arts, Media" data-eligibility="All" data-award-type="Fellowship" data-deadline="April">
                 <h3><a href="https://www.clir.org/fellowships/" target="_blank">Council on Library and Information Resources - Recordings at Risk</a></h3>
                 <p><strong>Field:</strong> Music, Arts, Media</p>
                 <p><strong>Eligibility:</strong> All</p>
@@ -135,53 +158,33 @@
                 <p><strong>Award Amount:</strong> $10,000 to $50,000</p>
                 <p><strong>Awarding Entity:</strong> Council on Library and Information Resources</p>
             </div>
-            <div class="result-item" data-field="Music, Arts, Media" data-eligibility="Postdoc">
-                <h3><a href="https://www.clir.org/fellowships/" target="_blank">Council on Library and Information Resources - Postdoc Fellowship Program</a></h3>
-                <p><strong>Field:</strong> Music, Arts, Media</p>
-                <p><strong>Eligibility:</strong> Postdoc</p>
-                <p><strong>Award Amount:</strong> $70,000 (suggested)</p>
-                <p><strong>Award Length:</strong> 3 years</p>
-                <p><strong>Awarding Entity:</strong> Council on Library and Information Resources</p>
-            </div>
-            <div class="result-item" data-field="" data-eligibility="">
-                <h3><a href="https://clscholarship.org/" target="_blank">Critical Language Scholarship Program</a></h3>
-                <p><strong>Field:</strong> Not specified</p>
-                <p><strong>Eligibility:</strong> Not specified</p>
-                <p><strong>Awarding Entity:</strong> Not specified</p>
-            </div>
-            <div class="result-item" data-field="" data-eligibility="">
-                <h3><a href="https://www.daad.org/en/find-funding/graduate-opportunities/" target="_blank">DAAD - German Academic Exchange Service</a></h3>
-                <p><strong>Field:</strong> Not specified</p>
-                <p><strong>Eligibility:</strong> Not specified</p>
-                <p><strong>Awarding Entity:</strong> Not specified</p>
-            </div>
-            <div class="result-item" data-field="" data-eligibility="">
-                <h3><a href="https://www.daad.de/rise/en/" target="_blank">DAAD Rise - Research internships in Science and Engineering</a></h3>
-                <p><strong>Field:</strong> Not specified</p>
-                <p><strong>Eligibility:</strong> Not specified</p>
-                <p><strong>Awarding Entity:</strong> Not specified</p>
-            </div>
             <!-- Add more fellowships here as needed -->
         </div>
     </div>
 
     <script>
-        function searchFellowships() {
-            const field = document.getElementById('field').value;
-            const eligibility = document.getElementById('eligibility').value;
+        function filterFellowships() {
             const keyword = document.getElementById('keyword').value.toLowerCase();
+            const fields = Array.from(document.querySelectorAll('.filters input[value^="Field"]:checked')).map(el => el.value);
+            const eligibilities = Array.from(document.querySelectorAll('.filters input[value^="Eligibility"]:checked')).map(el => el.value);
+            const awardTypes = Array.from(document.querySelectorAll('.filters input[value^="Award Type"]:checked')).map(el => el.value);
+            const deadlines = Array.from(document.querySelectorAll('.filters input[value^="Deadline"]:checked')).map(el => el.value);
 
             const results = document.querySelectorAll('.result-item');
             results.forEach(result => {
                 const resultField = result.getAttribute('data-field');
                 const resultEligibility = result.getAttribute('data-eligibility');
+                const resultAwardType = result.getAttribute('data-award-type');
+                const resultDeadline = result.getAttribute('data-deadline');
                 const text = result.textContent.toLowerCase();
 
-                const matchField = field ? resultField.includes(field) : true;
-                const matchEligibility = eligibility ? resultEligibility.includes(eligibility) : true;
                 const matchKeyword = keyword ? text.includes(keyword) : true;
+                const matchField = fields.length === 0 || fields.some(field => resultField.includes(field));
+                const matchEligibility = eligibilities.length === 0 || eligibilities.some(eligibility => resultEligibility.includes(eligibility));
+                const matchAwardType = awardTypes.length === 0 || awardTypes.includes(resultAwardType);
+                const matchDeadline = deadlines.length === 0 || deadlines.includes(resultDeadline);
 
-                if (matchField && matchEligibility && matchKeyword) {
+                if (matchKeyword && matchField && matchEligibility && matchAwardType && matchDeadline) {
                     result.style.display = '';
                 } else {
                     result.style.display = 'none';
