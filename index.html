@@ -92,8 +92,7 @@
 <body>
 
     <header>
-        <h1>Fellowship Finder </h1>
-        <h2>Graduate School IU Indianapolis </h2>
+        <h1>Fellowship Finder</h1>
         <p>Find external fellowships and awards for IU Indianapolis graduate students.</p>
     </header>
 
@@ -165,10 +164,10 @@
     <script>
         function filterFellowships() {
             const keyword = document.getElementById('keyword').value.toLowerCase();
-            const fields = Array.from(document.querySelectorAll('.filters input[value^="Field"]:checked')).map(el => el.value);
-            const eligibilities = Array.from(document.querySelectorAll('.filters input[value^="Eligibility"]:checked')).map(el => el.value);
-            const awardTypes = Array.from(document.querySelectorAll('.filters input[value^="Award Type"]:checked')).map(el => el.value);
-            const deadlines = Array.from(document.querySelectorAll('.filters input[value^="Deadline"]:checked')).map(el => el.value);
+            const fields = Array.from(document.querySelectorAll('.filters input[type="checkbox"][value^="Field"]:checked')).map(el => el.value);
+            const eligibilities = Array.from(document.querySelectorAll('.filters input[type="checkbox"][value^="Eligibility"]:checked')).map(el => el.value);
+            const awardTypes = Array.from(document.querySelectorAll('.filters input[type="checkbox"][value^="Award Type"]:checked')).map(el => el.value);
+            const deadlines = Array.from(document.querySelectorAll('.filters input[type="checkbox"][value^="Deadline"]:checked')).map(el => el.value);
 
             const results = document.querySelectorAll('.result-item');
             results.forEach(result => {
