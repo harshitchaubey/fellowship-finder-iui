@@ -40,13 +40,13 @@
             font-size: 18px;
             color: #990000; /* IU Red */
         }
-        .filters label {
-            display: block;
-            margin: 10px 0;
+        .filters select {
+            width: 100%;
+            padding: 10px;
             font-size: 14px;
-        }
-        .filters input[type="checkbox"] {
-            margin-right: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
         .search-bar {
             text-align: center;
@@ -103,32 +103,44 @@
     <div class="container">
         <div class="filters">
             <h3>Filter by Field</h3>
-            <label><input type="checkbox" value="STEM" onchange="filterFellowships()"> STEM</label>
-            <label><input type="checkbox" value="Humanities" onchange="filterFellowships()"> Humanities</label>
-            <label><input type="checkbox" value="Social Sciences" onchange="filterFellowships()"> Social Sciences</label>
-            <label><input type="checkbox" value="Business" onchange="filterFellowships()"> Business</label>
-            <label><input type="checkbox" value="Health Sciences" onchange="filterFellowships()"> Health Sciences</label>
-            <label><input type="checkbox" value="Music, Arts, Media" onchange="filterFellowships()"> Music, Arts, Media</label>
+            <select id="field" onchange="filterFellowships()">
+                <option value="">All Fields</option>
+                <option value="STEM">STEM</option>
+                <option value="Humanities">Humanities</option>
+                <option value="Social Sciences">Social Sciences</option>
+                <option value="Business">Business</option>
+                <option value="Health Sciences">Health Sciences</option>
+                <option value="Music, Arts, Media">Music, Arts, Media</option>
+            </select>
 
             <h3>Filter by Eligibility</h3>
-            <label><input type="checkbox" value="Domestic" onchange="filterFellowships()"> Domestic Students</label>
-            <label><input type="checkbox" value="International" onchange="filterFellowships()"> International Students</label>
-            <label><input type="checkbox" value="All" onchange="filterFellowships()"> All Students</label>
-            <label><input type="checkbox" value="Dissertation writing" onchange="filterFellowships()"> Dissertation writing</label>
-            <label><input type="checkbox" value="Late-stage (all courses completed)" onchange="filterFellowships()"> Late-stage (all courses completed)</label>
-            <label><input type="checkbox" value="Postdoc" onchange="filterFellowships()"> Postdoc</label>
+            <select id="eligibility" onchange="filterFellowships()">
+                <option value="">All Eligibility</option>
+                <option value="Domestic">Domestic Students</option>
+                <option value="International">International Students</option>
+                <option value="All">All Students</option>
+                <option value="Dissertation writing">Dissertation writing</option>
+                <option value="Late-stage (all courses completed)">Late-stage (all courses completed)</option>
+                <option value="Postdoc">Postdoc</option>
+            </select>
 
             <h3>Filter by Award Type</h3>
-            <label><input type="checkbox" value="Fellowship" onchange="filterFellowships()"> Fellowship</label>
-            <label><input type="checkbox" value="Scholarship" onchange="filterFellowships()"> Scholarship</label>
-            <label><input type="checkbox" value="Grant" onchange="filterFellowships()"> Grant</label>
-            <label><input type="checkbox" value="Internship" onchange="filterFellowships()"> Internship</label>
+            <select id="award-type" onchange="filterFellowships()">
+                <option value="">All Award Types</option>
+                <option value="Fellowship">Fellowship</option>
+                <option value="Scholarship">Scholarship</option>
+                <option value="Grant">Grant</option>
+                <option value="Internship">Internship</option>
+            </select>
 
             <h3>Filter by Deadline</h3>
-            <label><input type="checkbox" value="November" onchange="filterFellowships()"> November</label>
-            <label><input type="checkbox" value="December" onchange="filterFellowships()"> December</label>
-            <label><input type="checkbox" value="January" onchange="filterFellowships()"> January</label>
-            <label><input type="checkbox" value="February" onchange="filterFellowships()"> February</label>
+            <select id="deadline" onchange="filterFellowships()">
+                <option value="">All Deadlines</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+                <option value="January">January</option>
+                <option value="February">February</option>
+            </select>
         </div>
 
         <div class="results" id="results">
@@ -164,10 +176,10 @@
     <script>
         function filterFellowships() {
             const keyword = document.getElementById('keyword').value.toLowerCase();
-            const fields = Array.from(document.querySelectorAll('.filters input[type="checkbox"][value^="Field"]:checked')).map(el => el.value);
-            const eligibilities = Array.from(document.querySelectorAll('.filters input[type="checkbox"][value^="Eligibility"]:checked')).map(el => el.value);
-            const awardTypes = Array.from(document.querySelectorAll('.filters input[type="checkbox"][value^="Award Type"]:checked')).map(el => el.value);
-            const deadlines = Array.from(document.querySelectorAll('.filters input[type="checkbox"][value^="Deadline"]:checked')).map(el => el.value);
+            const field = document.getElementById('field').value;
+            const eligibility = document.getElementById('eligibility').value;
+            const awardType = document.getElementById('award-type').value;
+            const deadline = document.getElementById('deadline').value;
 
             const results = document.querySelectorAll('.result-item');
             results.forEach(result => {
@@ -178,10 +190,10 @@
                 const text = result.textContent.toLowerCase();
 
                 const matchKeyword = keyword ? text.includes(keyword) : true;
-                const matchField = fields.length === 0 || fields.some(field => resultField.includes(field));
-                const matchEligibility = eligibilities.length === 0 || eligibilities.some(eligibility => resultEligibility.includes(eligibility));
-                const matchAwardType = awardTypes.length === 0 || awardTypes.includes(resultAwardType);
-                const matchDeadline = deadlines.length === 0 || deadlines.includes(resultDeadline);
+                const matchField = field ? resultField.includes(field) : true;
+                const matchEligibility = eligibility ? resultEligibility.includes(eligibility) : true;
+                const matchAwardType = awardType ? resultAwardType === awardType : true;
+                const matchDeadline = deadline ? resultDeadline === deadline : true;
 
                 if (matchKeyword && matchField && matchEligibility && matchAwardType && matchDeadline) {
                     result.style.display = '';
